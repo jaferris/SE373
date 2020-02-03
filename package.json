@@ -1,0 +1,18 @@
+{
+  "name": "Ferris_Lab1",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "001375141",
+  "contributors": [],
+  "dependencies": {
+    "ignore-warnings": "^0.2.1"
+  }
+  
+}

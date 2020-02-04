@@ -3,11 +3,11 @@ var path = require("path");
 var hbs = require("hbs");
 var app = express();
 
-hbs.registerPartials(__dirname + "/views/partials");
+hbs.registerPartials(__dirname + "/WeekTwo/views/partials");
 
 app.use(express.urlencoded());
 
-app.use(express.static(path.join(__dirname + '/public')));
+app.use(express.static(path.join(__dirname + '/WeekTwo/public')));
 
 app.set('view engine', 'hbs');
 
@@ -25,7 +25,6 @@ app.get('/form', function(req,res){
 
 //app.post req.body (post data) url data below
 app.all('/results', function(req,res){
-   console.log(res);
    res.render('results.hbs', {name:req.body.Name, email:req.body.email, comments:req.body.comments});
 });
 

@@ -9,11 +9,22 @@ hbs.registerPartials(__dirname +'/views/partials');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended:false}));
 
-
-function rando(){
-    return Math.round(Math.random()*4 + 1);
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; 
 }
 
+hbs.registerHelper('error404',(num)=>{
+    var msg = "";
+    let classes = ["shrink", "rotate", "still"];
+    
+    for (i=0; i<num; i++){
+        var classNum = getRandomInt(0,3);
+        msg += `<div class = "${classes[classNum]}">404</div>`;
+    }
+    return new hbs.handlebars.SafeString(msg);
+})
 
 hbs.registerHelper('options',()=>{
     var msg = "";
@@ -41,6 +52,9 @@ hbs.registerHelper('table', (num)=>{
     return new hbs.handlebars.SafeString(msg);
 });
 
+app.get('/', (req, res)=>{  
+    res.render('index.hbs');
+})
 
 app.get('/form',(req, res)=>{
     res.render('form.hbs');
@@ -54,7 +68,7 @@ app.post('/results',(req,res)=>{
 
 
 app.use((req, res, next)=>{
-    const error = new Error('Page not found');
+    const error = new Error('Not Found');
     error.status = 404;
     next(error);
 });
@@ -62,8 +76,8 @@ app.use((req, res, next)=>{
 app.use((error, req, res, next)=>{
     res.status(error.status || 500);
     res.render('error.hbs', {
-        message:`${error.status} ${error.message}`,
-        num:rando()
+        message:`${error.message}`,
+        num: getRandomInt(20, 51)
     });
 })
 
